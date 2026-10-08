@@ -6,41 +6,37 @@
 <title>Simulado CPA ANBIMA</title>
 <style>
   :root {
-    --bg: #f5f7fa; --card: #ffffff; --text: #1f2933; --muted: #616e7c; --line: #d9e2ec;
-    --accent: #1f4e79; --ok: #1b7f3b; --ok-bg: #e3f5e9; --err: #b42318; --err-bg: #fdecea; --sel: #e8f0fb;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root { --bg: #12161c; --card: #1b2129; --text: #e4e7eb; --muted: #9aa5b1; --line: #2e3742;
-      --accent: #7fb2e5; --ok: #5fd08a; --ok-bg: #173323; --err: #ff8a80; --err-bg: #3a1b1b; --sel: #1f2c3d; }
+    --bg: #f3f6ff; --card: #ffffff; --text: #1e1b4b; --muted: #6366a0; --line: #dfe3fb;
+    --accent: #4f46e5; --accent2: #db2777; --ok: #059669; --ok-bg: #d1fae5; --err: #e11d48; --err-bg: #ffe4e6; --sel: #eef2ff;
   }
   * { box-sizing: border-box; }
   body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.5 "Segoe UI", system-ui, sans-serif; }
-  header { background: var(--card); border-bottom: 1px solid var(--line); padding: 14px 16px; position: sticky; top: 0; z-index: 5; }
+  header { background: linear-gradient(120deg, #4f46e5, #9333ea 55%, #db2777); color: #fff; box-shadow: 0 2px 10px rgba(79,70,229,.25); padding: 14px 16px; position: sticky; top: 0; z-index: 5; }
   .wrap { max-width: 860px; margin: 0 auto; }
   h1 { font-size: 20px; margin: 0 0 6px; }
-  .stats { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13px; color: var(--muted); }
-  .stats b { color: var(--text); }
-  .bars { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 6px 14px; margin-top: 8px; font-size: 12px; color: var(--muted); }
-  .bar { height: 6px; background: var(--line); border-radius: 3px; overflow: hidden; margin-top: 2px; }
-  .bar span { display: block; height: 100%; background: var(--accent); }
+  .stats { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13px; color: #e0e7ff; }
+  .stats b { color: #fff; }
+  .bars { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 6px 14px; margin-top: 8px; font-size: 12px; color: #e0e7ff; }
+  .bar { height: 6px; background: rgba(255,255,255,.3); border-radius: 3px; overflow: hidden; margin-top: 2px; }
+  .bar span { display: block; height: 100%; background: #fde047; }
   .controls { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
   select, button, input { font: inherit; }
   select, input[type=search] { padding: 6px 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--card); color: var(--text); }
   .btn { padding: 6px 12px; border: 1px solid var(--line); border-radius: 6px; background: var(--card); color: var(--text); cursor: pointer; }
-  .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
-  @media (prefers-color-scheme: dark) { .btn.primary { color: #0b1520; } }
+  .btn.primary { background: #fde047; border-color: #fde047; color: #3b0764; font-weight: 600; }
+  header .btn:not(.primary) { background: rgba(255,255,255,.15); border-color: rgba(255,255,255,.5); color: #fff; }
   main { padding: 16px; }
-  .card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 16px; margin-bottom: 14px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-top: 4px solid var(--accent); box-shadow: 0 2px 8px rgba(79,70,229,.08); border-radius: 12px; padding: 16px; margin-bottom: 14px; }
   .meta { font-size: 12px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 10px; margin-bottom: 8px; }
-  .tag { padding: 1px 7px; border-radius: 10px; border: 1px solid var(--line); }
+  .tag { padding: 1px 8px; border-radius: 10px; border: 1px solid var(--line); background: var(--sel); color: var(--accent); font-weight: 600; }
   .tag.ok { color: var(--ok); border-color: var(--ok); }
   .tag.err { color: var(--err); border-color: var(--err); }
   .enun { white-space: pre-line; margin: 0 0 10px; }
   .opts { display: grid; gap: 8px; }
   .opt { text-align: left; padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--card); color: var(--text); cursor: pointer; display: flex; gap: 10px; }
-  .opt:hover:not([disabled]) { background: var(--sel); }
+  .opt:hover:not([disabled]) { background: var(--sel); border-color: var(--accent); }
   .opt[disabled] { cursor: default; }
-  .opt .l { font-weight: 700; min-width: 18px; }
+  .opt .l { font-weight: 700; min-width: 18px; color: var(--accent2); }
   .opt.correct { background: var(--ok-bg); border-color: var(--ok); }
   .opt.wrong { background: var(--err-bg); border-color: var(--err); }
   .fb { margin-top: 10px; padding: 10px 12px; border-radius: 8px; font-size: 14px; }
@@ -48,8 +44,8 @@
   .fb.err { background: var(--err-bg); }
   .fb b { display: block; margin-bottom: 2px; }
   .redo { margin-top: 8px; font-size: 12px; }
-  .ctx { background: var(--sel); border-radius: 8px; padding: 10px 12px; margin-bottom: 10px; white-space: pre-line; }
-  .step { border-left: 3px solid var(--line); padding-left: 12px; margin: 12px 0; }
+  .ctx { background: #fdf4ff; border-left: 4px solid #c026d3; border-radius: 8px; padding: 10px 12px; margin-bottom: 10px; white-space: pre-line; }
+  .step { border-left: 3px solid #c4b5fd; padding-left: 12px; margin: 12px 0; }
   .client { font-style: italic; margin-bottom: 8px; }
   .client::before { content: "Cliente: "; font-style: normal; font-weight: 700; }
   .who { font-size: 12px; color: var(--muted); margin-bottom: 4px; }
@@ -63,31 +59,10 @@
 <body>
 <header>
   <div class="wrap">
-    <h1>Simulado CPA ANBIMA <span style="font-weight:400;font-size:13px;color:var(--muted)">· programa vigente desde 01/2026</span></h1>
+    <h1>Simulado CPA ANBIMA <span style="font-weight:400;font-size:13px;color:#e0e7ff">· programa vigente desde 01/2026</span></h1>
     <div class="stats" id="stats"></div>
     <div class="bars" id="bars"></div>
     <div class="controls" id="controls">
-      <select id="fMod">
-        <option value="all">Todos os módulos</option>
-        <option value="1">1 · Sistema financeiro nacional (20%)</option>
-        <option value="2">2 · Produtos do mercado (40%)</option>
-        <option value="3">3 · Relacionamento com o cliente (30%)</option>
-        <option value="4">4 · Inovação (10%)</option>
-        <option value="arvore">Árvores de decisão</option>
-      </select>
-      <select id="fStatus">
-        <option value="all">Todas</option>
-        <option value="new">Não respondidas</option>
-        <option value="wrong">Que errei</option>
-        <option value="right">Que acertei</option>
-      </select>
-      <select id="fDif">
-        <option value="all">Qualquer dificuldade</option>
-        <option value="facil">Fácil</option>
-        <option value="medio">Médio</option>
-        <option value="dificil">Difícil</option>
-      </select>
-      <input type="search" id="fBusca" placeholder="Buscar tema (ex.: FGC, come-cotas)">
       <button class="btn primary" id="btnProva">Simulado de prova (50 questões)</button>
       <button class="btn" id="btnReset">Zerar progresso</button>
     </div>
@@ -200,21 +175,14 @@ function cardArvore(q, num) {
 
 let pagina = 0, modoProva = null;
 
-function filtrados() {
-  const m = fMod.value, s = fStatus.value, d = fDif.value, b = fBusca.value.trim().toLowerCase();
-  return BANCO.filter(q =>
-    (m === "all" || (m === "arvore" ? q.tipo === "arvore" : String(q.modulo) === m && (q.tipo === "mc" || m !== "arvore"))) &&
-    (s === "all" || statusDe(q) === s) &&
-    (d === "all" || q.dificuldade === d) &&
-    (!b || (q.topico + " " + (q.enunciado || q.titulo + " " + q.contexto)).toLowerCase().includes(b)));
-}
+function filtrados() { return BANCO; }
 
 function render() {
   const lista = document.getElementById("lista"); lista.innerHTML = "";
   if (modoProva) return renderProva();
   const fs = filtrados(), paginas = Math.max(1, Math.ceil(fs.length / POR_PAGINA));
   if (pagina >= paginas) pagina = paginas - 1;
-  if (!fs.length) { lista.innerHTML = `<div class="empty">Nenhuma questão com esses filtros.</div>`; return; }
+  if (!fs.length) { lista.innerHTML = `<div class="empty">Nenhuma questão.</div>`; return; }
   fs.slice(pagina * POR_PAGINA, (pagina + 1) * POR_PAGINA).forEach((q, i) => {
     const n = pagina * POR_PAGINA + i + 1;
     lista.appendChild(q.tipo === "arvore" ? cardArvore(q, n) : cardMC(q, n));
@@ -300,9 +268,6 @@ function entregar() {
   salvar(); renderStats(); render(); scrollTo(0, 0);
 }
 
-const fMod = document.getElementById("fMod"), fStatus = document.getElementById("fStatus"), fDif = document.getElementById("fDif"), fBusca = document.getElementById("fBusca");
-[fMod, fStatus, fDif].forEach(el => el.onchange = () => { pagina = 0; modoProva = null; render(); });
-fBusca.oninput = () => { pagina = 0; modoProva = null; render(); };
 document.getElementById("btnProva").onclick = novaProva;
 document.getElementById("btnReset").onclick = () => {
   if (confirm("Apagar todo o seu progresso (acertos e erros salvos)?")) { estado = {}; salvar(); renderStats(); render(); }
